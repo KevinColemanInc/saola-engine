@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Crypto Decision Demo</title>
+        <link rel="stylesheet" href="/styles.css" />
+    </head>
+    <body>
+        <main class="demo-shell">
+            <section class="hero" aria-labelledby="page-title">
+                <header class="topbar">
+                    <h1 class="brand-mark">MoonMart Exchange</h1>
+                    <div class="topbar-meta">
+                        <label class="admin-mode" for="nationality-select">
+                            <span>Log in as</span>
+                            <select
+                                id="nationality-select"
+                                aria-label="Logged in nationality"
+                            >
+                                <option value="US">American</option>
+                                <option value="VN">Vietnamese</option>
+                                <option value="FR">French</option>
+                            </select>
+                        </label>
+                    </div>
+                </header>
+
+                <form
+                    id="decision-form"
+                    class="workflow"
+                    aria-labelledby="page-title"
+                >
+                    <section
+                        class="workflow-step"
+                        aria-label="Product selection"
+                    >
+                        <p class="micro-label">Step 1</p>
+                        <h1 id="page-title">Choose your product</h1>
+                        <div
+                            class="product-stage"
+                            role="group"
+                            aria-label="Product"
+                        >
+                            <button
+                                class="product-tile crypto-tile"
+                                type="button"
+                                data-product="crypto"
+                            >
+                                <span class="tile-kicker">Crypto Transfer</span>
+                                <span class="tile-title">Transfer crypto</span>
+                            </button>
+                            <button
+                                class="product-tile yield-tile"
+                                type="button"
+                                data-product="yield"
+                            >
+                                <span class="tile-kicker">Yield Product</span>
+                                <span class="tile-title">Yield</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section
+                        id="crypto-step"
+                        class="workflow-step product-details hidden"
+                        aria-label="Crypto transfer details"
+                    >
+                        <p class="micro-label">Step 2</p>
+                        <div class="form-heading">
+                            <h2>Transfer to another wallet</h2>
+                            <p>
+                                Send AXS from your Saola wallet to an external
+                                self-hosted wallet.
+                            </p>
+                        </div>
+                        <div class="transaction-form transfer-form">
+                            <section
+                                class="wallet-panel"
+                                aria-label="From wallet"
+                            >
+                                <span class="panel-label">From</span>
+                                <strong>Saola Wallet</strong>
+                                <span>0xuser-wallet</span>
+                            </section>
+                            <label class="field address-field">
+                                <span>Recipient wallet address</span>
+                                <input
+                                    id="to-wallet-address"
+                                    name="toWalletAddress"
+                                    type="text"
+                                    value="0xaxs-liquidity-pool"
+                                    disabled
+                                    required
+                                />
+                            </label>
+                            <div class="field-grid">
+                                <label class="field asset-field">
+                                    <span>Asset</span>
+                                    <select
+                                        disabled
+                                        aria-label="Transfer asset"
+                                    >
+                                        <option>AXS</option>
+                                    </select>
+                                </label>
+                                <label class="field">
+                                    <span>Coin amount</span>
+                                    <input
+                                        id="coin-amount"
+                                        name="coinAmount"
+                                        type="number"
+                                        min="0.000001"
+                                        step="0.000001"
+                                        value="12.5"
+                                        disabled
+                                        required
+                                    />
+                                </label>
+                                <label class="field">
+                                    <span>Estimated value (USD)</span>
+                                    <input
+                                        id="transfer-amount"
+                                        name="transferAmount"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        value="75"
+                                        disabled
+                                        required
+                                    />
+                                </label>
+                            </div>
+                            <dl class="form-summary">
+                                <div>
+                                    <dt>Network</dt>
+                                    <dd>Ronin</dd>
+                                </div>
+                                <div>
+                                    <dt>Wallet type</dt>
+                                    <dd>Self-hosted</dd>
+                                </div>
+                                <div>
+                                    <dt>Compliance check</dt>
+                                    <dd>KYC, sanctions, token rules</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </section>
+
+                    <section
+                        id="yield-step"
+                        class="workflow-step product-details hidden"
+                        aria-label="Yield product details"
+                    >
+                        <p class="micro-label">Step 2</p>
+                        <div class="form-heading">
+                            <h2>Open a fixed yield position</h2>
+                            <p>
+                                Select a term, enter the amount to invest, then
+                                submit for eligibility checks.
+                            </p>
+                        </div>
+                        <div class="transaction-form yield-form">
+                            <label class="field investment-field">
+                                <span>Investment amount (USD)</span>
+                                <input
+                                    id="yield-investment-amount"
+                                    name="yieldInvestmentAmount"
+                                    type="number"
+                                    min="0.01"
+                                    step="0.01"
+                                    value="1000"
+                                    disabled
+                                    required
+                                />
+                            </label>
+                            <fieldset class="yield-options" disabled>
+                                <legend class="sr-only">
+                                    Yield product options
+                                </legend>
+                                <label class="yield-option">
+                                    <input
+                                        type="radio"
+                                        name="yieldProduct"
+                                        value="1Y_1"
+                                        data-rate="1"
+                                        data-term="1Y"
+                                        checked
+                                    />
+                                    <span>
+                                        <strong>1% APY</strong>
+                                        <small>Lock for 1 year</small>
+                                    </span>
+                                </label>
+                                <label class="yield-option">
+                                    <input
+                                        type="radio"
+                                        name="yieldProduct"
+                                        value="6MO_2"
+                                        data-rate="2"
+                                        data-term="6mo"
+                                    />
+                                    <span>
+                                        <strong>2% APY</strong>
+                                        <small>Lock for 6 months</small>
+                                    </span>
+                                </label>
+                                <label class="yield-option">
+                                    <input
+                                        type="radio"
+                                        name="yieldProduct"
+                                        value="3MO_3"
+                                        data-rate="3"
+                                        data-term="3 months"
+                                    />
+                                    <span>
+                                        <strong>3% APY</strong>
+                                        <small>Lock for 3 months</small>
+                                    </span>
+                                </label>
+                            </fieldset>
+                            <dl class="form-summary yield-summary">
+                                <div>
+                                    <dt>Selected term</dt>
+                                    <dd id="yield-summary-term">1Y</dd>
+                                </div>
+                                <div>
+                                    <dt>Rate</dt>
+                                    <dd id="yield-summary-rate">1% APY</dd>
+                                </div>
+                                <div>
+                                    <dt>Investment</dt>
+                                    <dd id="yield-summary-amount">$1,000.00</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </section>
+
+                    <section
+                        class="submit-row"
+                        aria-label="Submit decision check"
+                    >
+                        <button
+                            id="submit-button"
+                            class="submit-button"
+                            type="submit"
+                            disabled
+                        >
+                            Submit
+                        </button>
+                        <button
+                            id="explain-button"
+                            class="explain-button hidden"
+                            type="button"
+                        >
+                            explain...
+                        </button>
+                    </section>
+                </form>
+
+                <section
+                    id="result-panel"
+                    class="decision-stage idle"
+                    aria-live="polite"
+                >
+                    <div>
+                        <p id="result-product" class="micro-label">Ready</p>
+                        <div id="decision-word" class="decision-word">
+                            Start
+                        </div>
+                    </div>
+                    <div id="proof-chips" class="proof-chips">
+                        <span>KYC</span>
+                        <span>Screening</span>
+                        <span>Rules</span>
+                    </div>
+                </section>
+
+                <section
+                    id="explanation-panel"
+                    class="explanation-panel hidden"
+                    aria-live="polite"
+                >
+                    <h2>Explanation</h2>
+                    <div id="explanation-copy"></div>
+                </section>
+
+                <details class="details-panel">
+                    <summary>Details</summary>
+                    <div id="details-list" class="details-list"></div>
+                    <pre id="payload-output">{}</pre>
+                </details>
+            </section>
+        </main>
+        <script src="/app.js" type="module"></script>
+    </body>
+</html>

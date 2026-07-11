@@ -1,0 +1,14 @@
+{
+  "name": "crypto-transactions-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo crypto transaction decision engine API.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
