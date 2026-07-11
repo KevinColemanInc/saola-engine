@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saola.local/schemas/code-risk.schema.json",
+  "title": "CodeRisk",
+  "type": "object",
+  "required": ["id", "findingId", "severity", "summary", "affectedPaths"],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "findingId": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "affectedPaths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommendedChange": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
