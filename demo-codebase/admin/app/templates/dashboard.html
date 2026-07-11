@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Runs Dashboard{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">Crawler operations</p>
+    <h1>Runs Dashboard</h1>
+  </div>
+  <a class="button" href="/runs/new">Start New Run</a>
+</section>
+
+{% if latest_run %}
+<section class="summary-band">
+  <div>
+    <span class="label">Most recent run</span>
+    <strong>{{ latest_run.id }}</strong>
+  </div>
+  <div>
+    <span class="label">Status</span>
+    <strong>{{ latest_run.status.value }}</strong>
+  </div>
+  <div>
+    <span class="label">Articles</span>
+    <strong>{{ latest_run.article_count }}</strong>
+  </div>
+  <div>
+    <span class="label">New regulations</span>
+    <strong>{{ latest_run.regulations | length }}</strong>
+  </div>
+  <a class="button button-secondary" href="/runs/{{ latest_run.id }}">View Results</a>
+</section>
+{% endif %}
+
+<section class="panel">
+  <div class="panel-heading">
+    <h2>Previous daily runs</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Run</th>
+          <th>Started</th>
+          <th>Status</th>
+          <th>Articles</th>
+          <th>Regulations</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for run in runs %}
+        <tr>
+          <td>{{ run.id }}</td>
+          <td>{{ run.started_at.strftime("%Y-%m-%d %H:%M UTC") }}</td>
+          <td><span class="status status-{{ run.status.value }}">{{ run.status.value }}</span></td>
+          <td>{{ run.article_count }}</td>
+          <td>{{ run.regulations | length }}</td>
+          <td><a href="/runs/{{ run.id }}">Results</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

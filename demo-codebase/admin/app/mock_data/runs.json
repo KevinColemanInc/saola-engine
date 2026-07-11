@@ -1,0 +1,20 @@
+[
+  {
+    "id": "run_003",
+    "status": "completed",
+    "article_count": 100,
+    "regulation_count": 3
+  },
+  {
+    "id": "run_002",
+    "status": "completed",
+    "article_count": 67,
+    "regulation_count": 1
+  },
+  {
+    "id": "run_001",
+    "status": "completed",
+    "article_count": 42,
+    "regulation_count": 0
+  }
+]

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Run Progress{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">Live run progress</p>
+    <h1>{{ run.id }}</h1>
+  </div>
+  <a class="button button-secondary" href="/runs/{{ run.id }}">Skip to Results</a>
+</section>
+
+<section
+  class="terminal-panel"
+  data-run-progress
+  data-run-id="{{ run.id }}"
+  data-results-url="/runs/{{ run.id }}"
+>
+  <div class="terminal-header">
+    <span></span>
+    <span></span>
+    <span></span>
+    <strong>crawler.log</strong>
+  </div>
+  <pre class="terminal-output" data-log-output>Booting mocked regulation crawler...</pre>
+  <div class="progress-track">
+    <div class="progress-fill" data-progress-fill></div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Run Results{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">{{ run.id }} results</p>
+    <h1>We found {{ regulations | length }} new regulations</h1>
+  </div>
+  <a class="button" href="/runs/new">Start New Run</a>
+</section>
+
+<section class="regulation-grid">
+  {% for regulation in regulations %}
+  <article class="regulation-card">
+    <div>
+      <p class="eyebrow">{{ regulation.topic }}</p>
+      <h2>{{ regulation.title }}</h2>
+      <p>{{ regulation.description }}</p>
+    </div>
+    <dl class="meta-grid">
+      <div>
+        <dt>Jurisdiction</dt>
+        <dd>{{ regulation.jurisdiction }}</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd><a href="{{ regulation.source_url }}" target="_blank" rel="noreferrer">{{ regulation.source_name }}</a></dd>
+      </div>
+      <div>
+        <dt>Published</dt>
+        <dd>{{ regulation.published_at.strftime("%Y-%m-%d") }}</dd>
+      </div>
+    </dl>
+    <a class="button button-secondary" href="/regulations/{{ regulation.id }}/fix">Fix It</a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

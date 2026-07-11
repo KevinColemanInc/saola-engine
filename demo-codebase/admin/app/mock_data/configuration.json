@@ -1,0 +1,28 @@
+{
+  "domains": [
+    "sbv.gov.vn",
+    "chinhphu.vn",
+    "mof.gov.vn",
+    "thuvienphapluat.vn"
+  ],
+  "topic_routing": [
+    {
+      "topic": "Vietnamese Crypto Regulation",
+      "email": "vietnam-legal@companyname.com"
+    },
+    {
+      "topic": "EU Crypto Regulation",
+      "email": "eu-legal@companyname.com"
+    },
+    {
+      "topic": "Payments Compliance",
+      "email": "payments-legal@companyname.com"
+    }
+  ],
+  "repositories": [
+    "company/payments-api",
+    "company/crypto-wallet",
+    "company/compliance-service",
+    "company/customer-platform"
+  ]
+}

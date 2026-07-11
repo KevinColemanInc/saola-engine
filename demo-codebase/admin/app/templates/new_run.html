@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Start Regulation Crawl Check{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">Configuration preview</p>
+    <h1>Start Regulation Crawl Check</h1>
+  </div>
+</section>
+
+<form class="stack" method="post" action="/runs">
+  <section class="panel">
+    <div class="panel-heading">
+      <h2>Domains</h2>
+    </div>
+    <ul class="check-list">
+      {% for domain in domains %}
+      <li>{{ domain }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading">
+      <h2>Topic Routing</h2>
+    </div>
+    <div class="routing-list">
+      {% for route in topic_routing %}
+      <div class="routing-row">
+        <strong>{{ route.topic }}</strong>
+        <span>{{ route.email }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <button class="button" type="submit">Go</button>
+</form>
+{% endblock %}

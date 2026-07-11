@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Pull Request Created{% endblock %}
+
+{% block content %}
+<section class="confirmation">
+  <p class="eyebrow">{{ result.repository }}</p>
+  <h1>Pull request created</h1>
+  <p>{{ regulation.title }}</p>
+  <a class="button" href="{{ result.pull_request_url }}" target="_blank" rel="noreferrer">Preview Pull Request</a>
+</section>
+{% endblock %}

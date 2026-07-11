@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Regulation Crawl Check{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">Regulation Crawl Check</a>
+      <nav class="nav">
+        <a href="/">Runs</a>
+        <a class="button button-small" href="/runs/new">Start New Run</a>
+      </nav>
+    </header>
+    <main class="shell">
+      {% block content %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', path='app.js') }}"></script>
+  </body>
+</html>

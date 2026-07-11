@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Fix Regulation{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">Remediation</p>
+    <h1>Choose a repository</h1>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{{ regulation.title }}</h2>
+  <p>{{ regulation.description }}</p>
+  <form class="stack" method="post" action="/regulations/{{ regulation.id }}/fix">
+    <label for="repository">GitHub repository</label>
+    <select id="repository" name="repository" required>
+      {% for repository in repositories %}
+      <option value="{{ repository }}">{{ repository }}</option>
+      {% endfor %}
+    </select>
+    <button class="button" type="submit">Submit</button>
+  </form>
+</section>
+{% endblock %}
