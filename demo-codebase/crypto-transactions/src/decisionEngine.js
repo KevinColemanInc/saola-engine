@@ -32,16 +32,16 @@ const EU_NATIONALITIES = new Set([
 ]);
 
 const TOKEN_TRADE_BLACKLIST = {
-  // AXS and U2U originate from Vietnam and are blacklisted for EU nationalities.
+  // AXS is restricted for Vietnamese nationals under Vietnam-specific trading rules.
   AXS: {
     originCountry: "VN",
-    blockedNationalities: "EU",
+    blockedNationalities: ["VN"],
     legalBasis: {
-      authority: "Demo EU Digital Assets Supervisory Ruling",
-      citation: "EU-CRYPTO-TRADE-BL-2026-001, Annex I, Vietnamese-Origin Game and Utility Tokens",
-      effectiveDate: "2026-01-01",
+      authority: "Demo Vietnam Digital Asset Trading Restriction",
+      citation: "VN-CRYPTO-TRADE-BL-2026-001, Vietnamese Nationality AXS Trading Ban",
+      effectiveDate: "2026-07-12",
       summary:
-        "This demo ruling prohibits CASPs and wallet transaction processors from permitting EU-nationality users to trade covered Vietnamese-origin crypto-assets listed in Annex I. The restriction is token-specific: EU nationalities are blocked only for the listed transaction token, while the asset origin country is separately recorded for audit review."
+        "This demo ruling prohibits CASPs and wallet transaction processors from permitting Vietnamese-nationality users to trade AXS. The restriction is token-specific and nationality-specific: Vietnamese nationals are blocked from AXS trading, while foreign nationalities remain eligible subject to the engine's other compliance controls."
     }
   },
   U2U: {
@@ -131,11 +131,7 @@ export function checkTransactionTokenBlacklist(payload) {
   const token = normalizeCode(payload?.transaction?.token);
   const nationality = normalizeCode(payload?.user?.nationality);
   const blacklistEntry = TOKEN_TRADE_BLACKLIST[token];
-  const blocked = Boolean(
-    blacklistEntry &&
-      blacklistEntry.blockedNationalities === "EU" &&
-      EU_NATIONALITIES.has(nationality)
-  );
+  const blocked = Boolean(blacklistEntry && isNationalityBlocked(blacklistEntry.blockedNationalities, nationality));
 
   return {
     passed: !blocked,
@@ -146,6 +142,18 @@ export function checkTransactionTokenBlacklist(payload) {
     blockedNationalities: blacklistEntry?.blockedNationalities ?? null,
     legalBasis: blacklistEntry?.legalBasis ?? null
   };
+}
+
+function isNationalityBlocked(blockedNationalities, nationality) {
+  if (!nationality) {
+    return false;
+  }
+
+  if (blockedNationalities === "EU") {
+    return EU_NATIONALITIES.has(nationality);
+  }
+
+  return Array.isArray(blockedNationalities) && blockedNationalities.includes(nationality);
 }
 
 export function decideCryptoTransaction(payload) {
