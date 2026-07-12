@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Pull Request Created{% endblock %}
+{% block title %}Preview Pull Request{% endblock %}
 
 {% block content %}
 <section class="confirmation">
-  <p class="eyebrow">{{ result.repository }}</p>
-  <h1>Pull request created</h1>
+  <p class="eyebrow">{{ repository }}</p>
+  <h1>Ready to prepare a pull request</h1>
   <p>{{ regulation.title }}</p>
-  <a class="button" href="{{ result.pull_request_url }}" target="_blank" rel="noreferrer">Preview Pull Request</a>
+  <form method="post" action="/regulations/{{ regulation.id }}/fix/jobs">
+    <input type="hidden" name="repository" value="{{ repository }}">
+    <button class="button" type="submit">Preview Pull Request</button>
+  </form>
 </section>
 {% endblock %}

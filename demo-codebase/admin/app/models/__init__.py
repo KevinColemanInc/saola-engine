@@ -1,4 +1,4 @@
-from app.models.regulation import FixRequest, FixResponse, Regulation
+from app.models.regulation import FixRequest, FixResponse, PullRequestJob, Regulation
 from app.models.run import CrawlEvent, CrawlRun, RunStatus
 
 __all__ = [
@@ -6,6 +6,7 @@ __all__ = [
     "CrawlRun",
     "FixRequest",
     "FixResponse",
+    "PullRequestJob",
     "Regulation",
     "RunStatus",
 ]

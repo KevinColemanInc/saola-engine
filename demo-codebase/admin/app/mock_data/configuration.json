@@ -20,9 +20,6 @@
     }
   ],
   "repositories": [
-    "company/payments-api",
-    "company/crypto-wallet",
-    "company/compliance-service",
-    "company/customer-platform"
+    "KevinColemanInc/saola-engine"
   ]
 }

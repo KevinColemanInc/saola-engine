@@ -119,6 +119,10 @@ a:hover {
   padding: 0 12px;
 }
 
+.hidden {
+  display: none;
+}
+
 .summary-band,
 .panel,
 .regulation-card,
@@ -357,6 +361,36 @@ select {
 
 .confirmation p {
   color: var(--muted);
+}
+
+.job-details {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.job-details div {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.job-details dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.job-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.job-message {
+  min-height: 24px;
 }
 
 @media (max-width: 760px) {

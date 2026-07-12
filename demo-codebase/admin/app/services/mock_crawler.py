@@ -35,21 +35,21 @@ class CrawlerService:
         return [
             CrawlEvent(delay_seconds=0, message="Waiting for Apify..."),
             CrawlEvent(delay_seconds=2, message="Crawling sbv.gov.vn"),
-            CrawlEvent(delay_seconds=5, message="Crawling chinhphu.vn"),
-            CrawlEvent(delay_seconds=8, message="Crawling mof.gov.vn"),
-            CrawlEvent(delay_seconds=11, message="Crawling thuvienphapluat.vn"),
-            CrawlEvent(delay_seconds=15, message="Found 100 new articles"),
-            CrawlEvent(delay_seconds=20, message="Filtering articles for compliance changes"),
-            CrawlEvent(delay_seconds=25, message="Consolidating duplicate articles"),
-            CrawlEvent(delay_seconds=30, message="Found new regulations"),
+            CrawlEvent(delay_seconds=3, message="Crawling chinhphu.vn"),
+            CrawlEvent(delay_seconds=3, message="Crawling mof.gov.vn"),
+            CrawlEvent(delay_seconds=3, message="Crawling thuvienphapluat.vn"),
+            CrawlEvent(delay_seconds=3, message="Found 100 new articles"),
+            CrawlEvent(delay_seconds=2, message="Filtering articles for compliance changes"),
+            CrawlEvent(delay_seconds=2, message="Consolidating duplicate articles"),
+            CrawlEvent(delay_seconds=1, message="Found new regulations"),
             CrawlEvent(
-                delay_seconds=35,
+                delay_seconds=1,
                 message=(
                     "Emailing Vietnamese Crypto Regulation to "
                     "vietnam-legal@companyname.com"
                 ),
             ),
-            CrawlEvent(delay_seconds=50, message="Regulation crawl completed"),
+            CrawlEvent(delay_seconds=5, message="Regulation crawl completed"),
         ]
 
     async def get_results(self, run_id: str):

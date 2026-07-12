@@ -90,12 +90,36 @@ async def submit_fix(
     repository: str = Form(...),
 ):
     regulation = await regulation_service.get_regulation(regulation_id)
-    result = await github_service.create_fix_pull_request(regulation, repository)
     return templates.TemplateResponse(
         request,
         "pull_request.html",
         {
             "regulation": regulation,
-            "result": result,
+            "repository": repository,
+        },
+    )
+
+
+@router.post("/regulations/{regulation_id}/fix/jobs")
+async def start_fix_job(
+    regulation_id: str,
+    repository: str = Form(...),
+):
+    regulation = await regulation_service.get_regulation(regulation_id)
+    result = await github_service.create_fix_pull_request(regulation, repository)
+    return RedirectResponse(
+        f"/pull-request-jobs/{result.job_id}",
+        status_code=303,
+    )
+
+
+@router.get("/pull-request-jobs/{job_id}", response_class=HTMLResponse)
+async def view_fix_job(request: Request, job_id: str):
+    job = github_service.get_job(job_id)
+    return templates.TemplateResponse(
+        request,
+        "pull_request_job.html",
+        {
+            "job": job,
         },
     )

@@ -26,19 +26,15 @@ TOPIC_ROUTING = [
 ]
 
 REPOSITORIES = [
-    "company/payments-api",
-    "company/crypto-wallet",
-    "company/compliance-service",
-    "company/customer-platform",
+    "KevinColemanInc/saola-engine",
 ]
 
 REGULATIONS = [
     Regulation(
         id="reg_vn_reporting_001",
-        title="Vietnam Introduces New Reporting Requirements for Crypto Service Providers",
+        title="Vietnam Bans Vietnamese, allows foreigners to trade AXS coin",
         description=(
-            "Vietnamese crypto businesses may be required to collect additional "
-            "transaction information and submit periodic reports to regulators."
+            "Vietnamese crypto businesses do not allow vietnamese to trade locally minted coins, but foreigners, even foreigners residing in vietnam are allowed to trade vietnamese coins, effective Jan 01, 2027."
         ),
         jurisdiction="Vietnam",
         topic="Vietnamese Crypto Regulation",

@@ -1,6 +1,6 @@
 # Regulation Crawler Admin
 
-Mock FastAPI admin service for monitoring regulation crawler runs, reviewing discovered regulations, and simulating remediation pull requests.
+Mock FastAPI admin service for monitoring regulation crawler runs, reviewing discovered regulations, and preparing remediation pull requests.
 
 ## Run locally
 
@@ -19,4 +19,6 @@ Open `http://127.0.0.1:8000/`.
 pytest
 ```
 
-The first version is intentionally deterministic: crawler domains, progress events, regulations, emails, repositories, and pull request URLs are all mocked.
+Crawler domains, progress events, regulations, emails, and repositories are mocked. Pressing **Preview Pull Request** starts a background Codex CLI job that runs headlessly, creates a fresh branch, and uses GitHub CLI to open a remediation pull request.
+
+The server process must have authenticated `codex` and `gh` CLIs on `PATH`.

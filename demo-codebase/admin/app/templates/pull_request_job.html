@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Pull Request Job{% endblock %}
+
+{% block content %}
+<section class="confirmation" data-pr-job data-job-id="{{ job.id }}">
+  <p class="eyebrow">{{ job.repository }}</p>
+  <h1>Preparing pull request</h1>
+  <p>{{ job.regulation_title }}</p>
+
+  <dl class="job-details">
+    <div>
+      <dt>Status</dt>
+      <dd data-job-status>{{ job.status }}</dd>
+    </div>
+    <div>
+      <dt>Branch</dt>
+      <dd>{{ job.branch_name }}</dd>
+    </div>
+    <div>
+      <dt>Job</dt>
+      <dd>{{ job.id }}</dd>
+    </div>
+  </dl>
+
+  <p class="job-message" data-job-message>
+    Codex is running headlessly and will open the pull request with GitHub CLI.
+  </p>
+
+  <a class="button hidden" href="#" target="_blank" rel="noreferrer" data-pr-link>Open Pull Request</a>
+</section>
+{% endblock %}
