@@ -57,6 +57,19 @@ const TOKEN_TRADE_BLACKLIST = {
   }
 };
 
+const VIETNAM_LOCAL_TOKEN_RULE = {
+  nationality: "VN",
+  originCountry: "VN",
+  effectiveDate: "2027-01-01",
+  legalBasis: {
+    authority: "State Bank of Vietnam",
+    citation: "Vietnamese locally minted coin trading restriction, published 2026-07-08",
+    effectiveDate: "2027-01-01",
+    summary:
+      "Vietnamese-nationality users may not trade locally minted Vietnamese coins. Foreign-nationality users remain eligible, including when residing in Vietnam; eligibility is determined by nationality, not location."
+  }
+};
+
 const LEGAL_BASIS = {
   validation: {
     authority: "Crypto Transactions Demo API Contract",
@@ -148,12 +161,36 @@ export function checkTransactionTokenBlacklist(payload) {
   };
 }
 
-export function decideCryptoTransaction(payload) {
+export function checkVietnamLocalTokenRestriction(payload, asOf = new Date()) {
+  const token = normalizeCode(payload?.transaction?.token);
+  const nationality = normalizeCode(payload?.user?.nationality);
+  const tokenEntry = TOKEN_TRADE_BLACKLIST[token];
+  const isVietnamOriginToken = tokenEntry?.originCountry === VIETNAM_LOCAL_TOKEN_RULE.originCountry;
+  const effective = new Date(asOf) >= new Date(`${VIETNAM_LOCAL_TOKEN_RULE.effectiveDate}T00:00:00.000Z`);
+  const blocked = Boolean(
+    effective &&
+      isVietnamOriginToken &&
+      nationality === VIETNAM_LOCAL_TOKEN_RULE.nationality
+  );
+
+  return {
+    passed: !blocked,
+    applies: Boolean(effective && isVietnamOriginToken),
+    effective,
+    token: token || null,
+    nationality: nationality || null,
+    originCountry: tokenEntry?.originCountry ?? null,
+    legalBasis: VIETNAM_LOCAL_TOKEN_RULE.legalBasis
+  };
+}
+
+export function decideCryptoTransaction(payload, { asOf = new Date() } = {}) {
   const validationErrors = validatePayload(payload);
   const sanctionsScreening = runSanctionsScreening(payload);
   const transactionScreening = runTransactionScreening(payload);
   const tokenIssuanceNationality = checkTokenIssuanceNationality(payload);
   const transactionTokenBlacklist = checkTransactionTokenBlacklist(payload);
+  const vietnamLocalTokenRestriction = checkVietnamLocalTokenRestriction(payload, asOf);
 
   const reasons = [...validationErrors];
 
@@ -190,6 +227,14 @@ export function decideCryptoTransaction(payload) {
       }));
     }
 
+    if (!vietnamLocalTokenRestriction.passed) {
+      reasons.push(buildReason({
+        code: "VIETNAM_LOCAL_TOKEN_NATIONALITY_RESTRICTED",
+        message: `${vietnamLocalTokenRestriction.token} cannot be traded by users with Vietnamese nationality from 2027-01-01.`,
+        legalBasis: vietnamLocalTokenRestriction.legalBasis
+      }));
+    }
+
     if (!sanctionsScreening.passed) {
       reasons.push(buildReason({
         code: "SANCTIONS_SCREENING_FAILED",
@@ -213,7 +258,8 @@ export function decideCryptoTransaction(payload) {
     reasons,
     checks: {
       tokenIssuanceNationality,
-      transactionTokenBlacklist
+      transactionTokenBlacklist,
+      vietnamLocalTokenRestriction
     },
     screening: {
       sanctions: sanctionsScreening,
