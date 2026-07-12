@@ -52,6 +52,7 @@ curl -X POST http://localhost:3000/decisions/crypto-transaction \
 CASP counterparties must include `caspName`.
 Set `transaction.issuesNewTokens` to `true` when the transaction issues new tokens. The decision engine includes a `checks.tokenIssuanceNationality` result that passes for any nationality.
 Set `transaction.token` to the traded token symbol when the transaction trades a token. AXS and U2U are noted as Vietnam-origin tokens and are blacklisted for EU nationalities.
+From January 1, 2027, Vietnamese-nationality users are also prohibited from trading these Vietnam-origin tokens. Foreign-nationality users remain eligible even when their location is Vietnam.
 
 The response includes the final decision, denial reasons when applicable, and the sanctions and transaction screening results. Every denial reason includes a verbose `legalBasis` object with the cited authority, citation, effective date, and a plain-English explanation of why that rule triggered the rejection.
 

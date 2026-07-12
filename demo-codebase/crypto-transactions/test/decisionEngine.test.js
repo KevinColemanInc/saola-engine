@@ -239,3 +239,68 @@ test("permits non-EU nationalities from trading EU-blacklisted Vietnamese tokens
   assert.equal(result.checks.transactionTokenBlacklist.token, "U2U");
   assert.equal(result.checks.transactionTokenBlacklist.originCountry, "VN");
 });
+
+test("denies Vietnamese nationals trading Vietnam-origin tokens from 2027", () => {
+  const result = decideCryptoTransaction({
+    user: {
+      id: "user-vn",
+      location: "US",
+      nationality: "VN",
+      kycStatus: "APPROVED"
+    },
+    transaction: {
+      isYieldProduct: false,
+      token: "AXS",
+      amount: 100,
+      from: { walletType: "SELF_HOSTED", address: "0xfrom" },
+      to: { walletType: "SELF_HOSTED", address: "0xto" }
+    }
+  }, { asOf: "2027-01-01T00:00:00.000Z" });
+
+  assert.equal(result.permitted, false);
+  assert.equal(result.reasons[0].code, "VIETNAM_LOCAL_TOKEN_NATIONALITY_RESTRICTED");
+  assert.equal(result.reasons[0].legalBasis.authority, "State Bank of Vietnam");
+  assert.equal(result.reasons[0].legalBasis.effectiveDate, "2027-01-01");
+});
+
+test("permits foreign nationals residing in Vietnam to trade Vietnam-origin tokens", () => {
+  const result = decideCryptoTransaction({
+    user: {
+      id: "user-us",
+      location: "VN",
+      nationality: "US",
+      kycStatus: "APPROVED"
+    },
+    transaction: {
+      isYieldProduct: false,
+      token: "AXS",
+      amount: 100,
+      from: { walletType: "SELF_HOSTED", address: "0xfrom" },
+      to: { walletType: "SELF_HOSTED", address: "0xto" }
+    }
+  }, { asOf: "2027-01-01T00:00:00.000Z" });
+
+  assert.equal(result.permitted, true);
+  assert.equal(result.checks.vietnamLocalTokenRestriction.applies, true);
+});
+
+test("does not apply the Vietnam local-token restriction before 2027", () => {
+  const result = decideCryptoTransaction({
+    user: {
+      id: "user-vn",
+      location: "VN",
+      nationality: "VN",
+      kycStatus: "APPROVED"
+    },
+    transaction: {
+      isYieldProduct: false,
+      token: "U2U",
+      amount: 100,
+      from: { walletType: "SELF_HOSTED", address: "0xfrom" },
+      to: { walletType: "SELF_HOSTED", address: "0xto" }
+    }
+  }, { asOf: "2026-12-31T23:59:59.999Z" });
+
+  assert.equal(result.permitted, true);
+  assert.equal(result.checks.vietnamLocalTokenRestriction.effective, false);
+});
